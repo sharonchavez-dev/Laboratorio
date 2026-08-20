@@ -1,0 +1,26 @@
+Algoritmo ServirCafeSecuencial
+	// Definición de variables
+	Definir taza, cafePreparado Como Cadena
+	Definir  azucar Como real
+	Definir salida Como Cadena
+	
+	// ENTRADA
+	Escribir "Ingrese el tipo/estado de la taza (ej. Taza limpia):"
+	Leer taza
+	
+	Escribir "Ingrese el estado del café (ej. Café caliente de cafetera):"
+	Leer cafePreparado
+	
+	Escribir "Ingrese la cantidad/tipo de azúcar (ej. 2 cucharadas):"
+	Leer azucar
+	
+	// PROCESO (Estructura puramente secuencial)
+	Escribir "Paso 1: Colocar ", taza, " en la superficie de trabajo."
+	Escribir "Paso 2: Servir el ", cafePreparado, " dentro de la ", taza, "."
+	Escribir "Paso 3: Agregar ", azuca, " a la ", taza, "."
+	Escribir "Paso 4: Mezclar el contenido con una cuchara."
+	
+	// SALIDA
+
+	Escribir "SALIDA: ", salida
+FinAlgoritmo
