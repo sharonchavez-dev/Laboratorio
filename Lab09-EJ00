@@ -1,0 +1,100 @@
+#include <iostream>
+
+
+using namespace std;
+
+// Constante para el tamano maximo del vector
+const int MAX_ELEMENTOS = 100;
+
+// Prototipos de funciones
+int leerCantidad(int n);
+void registrarVector(int vec[], int n);
+void buscarValor(const int vec[], int n);
+void ordenarVector(int vec[], int n);
+void mostrarVector(const int vec[], int n);
+
+int main() {
+    int vec[MAX_ELEMENTOS];
+    // 1. Registrar cantidad de valores
+    int n = leerCantidad(n); // 6
+    // 2. Llenar el vector
+    registrarVector(vec, n); //20.10.5.4.30.1
+
+    // 3. Buscar un valor en el vector
+    buscarValor(vec, n); //4
+
+    // 4. Ordenar el vector
+    ordenarVector(vec, n); //1.4.5.10.20.30
+
+    // 5. Mostrar el vector ordenado
+    cout << "\n--- VECTOR ORDENADO (ASCENDENTE) ---" << endl;
+    mostrarVector(vec, n);
+
+    return 0;
+}
+
+// Lee y valida la cantidad de elementos a ingresar
+int leerCantidad(int n) {
+//    int n;
+    do {
+        cout << "Ingrese la cantidad de valores a registrar (1 a " << MAX_ELEMENTOS << "): ";
+        cin >> n;
+        if (n < 1 || n > MAX_ELEMENTOS) {
+            cout << "[ERROR] Cantidad fuera de rango. Intente de nuevo.\n";
+        }
+    } while (n < 1 || n > MAX_ELEMENTOS);
+    return n;
+}
+
+// Registra los elementos tipo int en el vector
+void registrarVector(int vec[], int n) {
+    cout << "\n--- REGISTRO DE VALORES ---" << endl;
+    for (int i = 0; i < n; i++) {
+        cout << "Ingrese el valor para la posicion [" << i << "]: ";
+        cin >> vec[i];
+    }
+}
+
+// Realiza una busqueda secuencial del valor solicitado
+void buscarValor(const int vec[], int n) {
+    int valorBuscado;
+    bool encontrado = false;
+
+    cout << "\n--- BUSQUEDA DE UN VALOR ---" << endl;
+    cout << "Ingrese el numero que desea buscar: ";
+    cin >> valorBuscado;
+
+    for (int i = 0; i < n; i++) {
+        if (vec[i] == valorBuscado) {
+            cout << "-> El valor " << valorBuscado << " fue ENCONTRADO en el indice [" << i << "]." << endl;
+            encontrado = true;
+            // Se omite 'break' por si el elemento se repite en varias posiciones
+        }
+    }
+
+    if (!encontrado) {
+        cout << "-> El valor " << valorBuscado << " NO se encuentra en el vector." << endl;
+    }
+}
+
+// Ordena el vector de menor a mayor usando algoritmo de Burbuja (o Selección)
+void ordenarVector(int vec[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (vec[j] > vec[j + 1]) {
+                int aux = vec[j];
+                vec[j] = vec[j + 1];
+                vec[j + 1] = aux;
+            }
+        }
+    }
+}
+
+// Muestra el contenido del vector
+void mostrarVector(const int vec[], int n) {
+    cout << "[ ";
+    for (int i = 0; i < n; i++) {
+        cout << vec[i] << (i < n - 1 ? ", " : "");
+    }
+    cout << " ]" << endl;
+}
