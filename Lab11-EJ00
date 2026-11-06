@@ -1,0 +1,349 @@
+
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+// ==========================================
+// 1. PROTOTIPOS DE FUNCIONES
+// ==========================================
+
+void mostrarMenu();
+void ejecutarMenu();
+
+void registrarVentas(float ventas[], int &n);
+void mostrarVentas(float ventas[], int n);
+
+float calcularTotal(float ventas[], int n);
+float calcularPromedio(float ventas[], int n);
+
+void mayorMenor(float ventas[], int n,
+                float &mayor, float &menor);
+
+int contarVentasAltas(float ventas[], int n);
+int buscarVenta(float ventas[], int n, float valor);
+
+void actualizarVenta(float ventas[], int n);
+void reporteGeneral(float ventas[], int n);
+
+
+// ==========================================
+// 2. FUNCION PRINCIPAL
+// ==========================================
+
+int main() {
+
+    ejecutarMenu();
+
+    return 0;
+}
+
+
+// ==========================================
+// 3. DEFINICION DE FUNCIONES
+// ==========================================
+
+// FUNCION 1: MOSTRAR MENU
+
+void mostrarMenu() {
+
+    cout << "\n=====================================\n";
+    cout << "      SISTEMA DE VENTAS - TIENDA\n";
+    cout << "=====================================\n";
+    cout << "1. Registrar ventas\n";
+    cout << "2. Mostrar ventas registradas\n";
+    cout << "3. Calcular total de ventas\n";
+    cout << "4. Calcular promedio de ventas\n";
+    cout << "5. Mostrar venta mayor y menor\n";
+    cout << "6. Contar dias con ventas > Bs 1000\n";
+    cout << "7. Buscar una venta\n";
+    cout << "8. Actualizar una venta\n";
+    cout << "9. Mostrar reporte general\n";
+    cout << "0. Salir\n";
+    cout << "=====================================\n";
+}
+
+
+// FUNCION 2: CONTROLAR EL MENU
+
+void ejecutarMenu() {
+
+    float ventas[30];
+    int n = 0;
+    int opcion;
+    int posicion;
+    float mayor, menor;
+    float valor;
+
+    cout << fixed << setprecision(2);
+
+    do {
+
+        mostrarMenu();
+
+        cout << "Seleccione una opcion: ";
+        cin >> opcion;
+
+        if (opcion >= 2 && opcion <= 9 && n == 0) {
+
+            cout << "\nPrimero debe registrar las ventas.\n";
+
+            continue;
+        }
+
+        switch (opcion) {
+
+            case 1:
+                registrarVentas(ventas, n);
+                break;
+
+            case 2:
+                mostrarVentas(ventas, n);
+                break;
+
+            case 3:
+                cout << "\nTotal de ventas: Bs "
+                     << calcularTotal(ventas, n) << endl;
+                break;
+
+            case 4:
+                cout << "\nPromedio de ventas: Bs "
+                     << calcularPromedio(ventas, n) << endl;
+                break;
+
+            case 5:
+                mayorMenor(ventas, n, mayor, menor);
+
+                cout << "\nVenta mayor: Bs " << mayor;
+                cout << "\nVenta menor: Bs " << menor << endl;
+                break;
+
+            case 6:
+                cout << "\nDias con ventas mayores a Bs 1000: "
+                     << contarVentasAltas(ventas, n) << endl;
+                break;
+
+            case 7:
+                cout << "\nIngrese el importe a buscar: ";
+                cin >> valor;
+
+                posicion = buscarVenta(ventas, n, valor);
+
+                if (posicion == -1) {
+                    cout << "Venta no encontrada.\n";
+                } else {
+                    cout << "Venta encontrada en el dia "
+                         << posicion + 1 << endl;
+                }
+                break;
+
+            case 8:
+                actualizarVenta(ventas, n);
+                break;
+
+            case 9:
+                reporteGeneral(ventas, n);
+                break;
+
+            case 0:
+                cout << "\nGracias por utilizar el sistema.\n";
+                break;
+
+            default:
+                cout << "\nOpcion incorrecta.\n";
+        }
+
+        cout << endl;
+
+    } while (opcion != 0);
+}
+
+
+// FUNCION 3: REGISTRAR VENTAS
+
+void registrarVentas(float ventas[], int &n) {
+
+    do {
+
+        cout << "\nIngrese la cantidad de dias (1-30): ";
+        cin >> n;
+
+        if (n < 1 || n > 30) {
+            cout << "Cantidad incorrecta.\n";
+        }
+
+    } while (n < 1 || n > 30);
+
+    for (int i = 0; i < n; i++) {
+
+        do {
+
+            cout << "Venta del dia " << i + 1 << ": Bs ";
+            cin >> ventas[i];
+
+            if (ventas[i] < 0) {
+                cout << "La venta no puede ser negativa.\n";
+            }
+
+        } while (ventas[i] < 0);
+    }
+
+    cout << "\nVentas registradas correctamente.\n";
+}
+
+
+// FUNCION 4: MOSTRAR VENTAS
+
+void mostrarVentas(float ventas[], int n) {
+
+    cout << "\n----- VENTAS REGISTRADAS -----\n";
+
+    for (int i = 0; i < n; i++) {
+
+        cout << "Dia " << i + 1
+             << ": Bs " << ventas[i] << endl;
+    }
+}
+
+
+// FUNCION 5: CALCULAR TOTAL
+
+float calcularTotal(float ventas[], int n) {
+
+    float total = 0;
+
+    for (int i = 0; i < n; i++) {
+
+        total = total + ventas[i];
+    }
+
+    return total;
+}
+
+
+// FUNCION 6: CALCULAR PROMEDIO
+
+float calcularPromedio(float ventas[], int n) {
+
+    float total = calcularTotal(ventas, n);
+
+    float promedio = total / n;
+
+    return promedio;
+}
+
+
+// FUNCION 7: OBTENER MAYOR Y MENOR
+
+void mayorMenor(float ventas[], int n,
+                float &mayor, float &menor) {
+
+    mayor = ventas[0];
+    menor = ventas[0];
+
+    for (int i = 1; i < n; i++) {
+
+        if (ventas[i] > mayor) {
+            mayor = ventas[i];
+        }
+
+        if (ventas[i] < menor) {
+            menor = ventas[i];
+        }
+    }
+}
+
+
+// FUNCION 8: CONTAR VENTAS ALTAS
+
+int contarVentasAltas(float ventas[], int n) {
+
+    int contador = 0;
+
+    for (int i = 0; i < n; i++) {
+
+        if (ventas[i] > 1000) {
+            contador++;
+        }
+    }
+
+    return contador;
+}
+
+
+// FUNCION 9: BUSCAR UNA VENTA
+
+int buscarVenta(float ventas[], int n, float valor) {
+
+    for (int i = 0; i < n; i++) {
+
+        if (ventas[i] == valor) {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+
+// FUNCION 10: ACTUALIZAR UNA VENTA
+
+void actualizarVenta(float ventas[], int n) {
+
+    int dia;
+    float nuevoImporte;
+
+    do {
+
+        cout << "\nIngrese el dia a modificar (1-"
+             << n << "): ";
+        cin >> dia;
+
+        if (dia < 1 || dia > n) {
+            cout << "Dia incorrecto.\n";
+        }
+
+    } while (dia < 1 || dia > n);
+
+    do {
+
+        cout << "Ingrese el nuevo importe: Bs ";
+        cin >> nuevoImporte;
+
+        if (nuevoImporte < 0) {
+            cout << "El importe no puede ser negativo.\n";
+        }
+
+    } while (nuevoImporte < 0);
+
+    ventas[dia - 1] = nuevoImporte;
+
+    cout << "\nVenta actualizada correctamente.\n";
+}
+
+
+// FUNCION 11: REPORTE GENERAL
+
+void reporteGeneral(float ventas[], int n) {
+
+    float mayor, menor;
+
+    cout << "\n========== REPORTE GENERAL ==========\n";
+
+    mostrarVentas(ventas, n);
+
+    cout << "\nTotal: Bs "
+         << calcularTotal(ventas, n);
+
+    cout << "\nPromedio: Bs "
+         << calcularPromedio(ventas, n);
+
+    mayorMenor(ventas, n, mayor, menor);
+
+    cout << "\nVenta mayor: Bs " << mayor;
+    cout << "\nVenta menor: Bs " << menor;
+
+    cout << "\nDias con ventas > Bs 1000: "
+         << contarVentasAltas(ventas, n);
+
+    cout << "\n=====================================\n";
+}
