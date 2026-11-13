@@ -1,0 +1,95 @@
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+// 1. PROTOTIPOS DE FUNCIONES
+
+void registrarNombre(string &nombre);
+void mostrarNombre(string nombre);
+int contarCaracteres(string nombre);
+void mostrarPrimeroUltimo(string nombre);
+void mostrarCaracteres(string nombre);
+void verificarVacio(string nombre);
+
+// 2. FUNCION PRINCIPAL
+
+int main() {
+
+    string nombre;
+
+    registrarNombre(nombre);
+    mostrarNombre(nombre);
+    mostrarPrimeroUltimo(nombre);
+    mostrarCaracteres(nombre);
+    verificarVacio(nombre);
+
+    return 0;
+}
+
+// 3. DEFINICION DE FUNCIONES
+
+// FUNCION 1: REGISTRAR NOMBRE
+
+void registrarNombre(string &nombre) {
+
+    cout << "Ingrese el nombre: ";
+    cin >> nombre;
+}
+
+// FUNCION 2: MOSTRAR NOMBRE Y CANTIDAD
+
+void mostrarNombre(string nombre) {
+
+    cout << "\nNombre: " << nombre << endl;
+
+    cout << "Cantidad de caracteres: "
+         << contarCaracteres(nombre) << endl;
+}
+
+// FUNCION 3: CONTAR CARACTERES
+
+int contarCaracteres(string nombre) {
+
+    return nombre.length();
+}
+
+// FUNCION 4: MOSTRAR PRIMER Y ULTIMO CARACTER
+
+void mostrarPrimeroUltimo(string nombre) {
+
+    int cantidad = contarCaracteres(nombre);
+
+    if (cantidad > 0) {
+
+        cout << "Primer caracter: "
+             << nombre[0] << endl;
+
+        cout << "Ultimo caracter: "
+             << nombre[cantidad - 1] << endl;
+    }
+}
+
+// FUNCION 5: MOSTRAR CADA CARACTER
+
+void mostrarCaracteres(string nombre) {
+
+    cout << "\nCARACTERES DEL NOMBRE\n";
+
+    for (int i = 0; i < nombre.length(); i++) {
+
+        cout << "Posicion " << i
+             << ": " << nombre[i] << endl;
+    }
+}
+
+// FUNCION 6: VERIFICAR SI ESTA VACIO
+
+void verificarVacio(string nombre) {
+
+    if (nombre.empty()) {
+        cout << "\nLa cadena esta vacia." << endl;
+    } else {
+        cout << "\nLa cadena contiene caracteres." << endl;
+    }
+}
