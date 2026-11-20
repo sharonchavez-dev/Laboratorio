@@ -1,0 +1,124 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+// PROTOTIPOS
+void registrarCantidad(int &n);
+void registrarProductos(string productos[], string marcas[], int n);
+string unirDatos(string producto, string marca);
+int contarLetras(string producto, string marca);
+void mostrarProductos(string productos[], string marcas[], int n);
+void buscarProducto(string productos[], int n, string buscado);
+
+int main() {
+
+    string productos[20], marcas[20];
+    string buscado;
+    int n;
+    registrarCantidad(n);
+    registrarProductos(productos, marcas, n);
+    mostrarProductos(productos, marcas, n);
+    cout << "\nIngrese producto a buscar: ";
+    cin >> buscado;
+    buscarProducto(productos, n, buscado);
+    return 0;
+}
+// FUNCION 1: REGISTRAR CANTIDAD
+void registrarCantidad(int &n) {
+    do {
+        cout << "Cantidad de productos (1-20): ";
+        cin >> n;
+
+    } while (n < 1 || n > 20);
+}
+
+// FUNCION 2: REGISTRAR PRODUCTOS
+void registrarProductos(string productos[], string marcas[], int n) {
+
+    for (int i = 0; i < n; i++) {
+
+        cout << "\nPRODUCTO " << i + 1 << endl;
+
+        cout << "Nombre: ";
+        cin >> productos[i];
+
+        cout << "Marca: ";
+        cin >> marcas[i];
+    }
+}
+
+// FUNCION 3: UNIR DATOS
+string unirDatos(string producto, string marca) {
+
+    string descripcion;
+
+    descripcion = producto + " " + marca;
+
+    return descripcion;
+}
+
+// FUNCION 4: CONTAR LETRAS
+int contarLetras(string producto, string marca) {
+
+    int cantidad;
+
+    cantidad = producto.length() + marca.length();
+
+    return cantidad;
+}
+
+// FUNCION 5: MOSTRAR PRODUCTOS
+void mostrarProductos(string productos[], string marcas[], int n) {
+
+    string descripcion;
+    int cantidad;
+
+    cout << "\n===== LISTADO DE PRODUCTOS =====\n";
+
+    for (int i = 0; i < n; i++) {
+
+        descripcion = unirDatos(productos[i], marcas[i]);
+
+        cantidad = contarLetras(productos[i], marcas[i]);
+
+        cout << "\nProducto " << i + 1
+             << ": " << descripcion << endl;
+
+        cout << "Cantidad de letras: "
+             << cantidad << endl;
+    }
+}
+
+// FUNCION 6: BUSCAR PRODUCTO CON FIND
+void buscarProducto(string productos[], int n, string buscado) {
+
+    bool encontrado = false;
+    size_t posicion;
+
+    cout << "\n===== RESULTADO DE BUSQUEDA =====\n";
+
+    for (int i = 0; i < n; i++) {
+
+        posicion = productos[i].find(buscado);
+
+        if (posicion < productos[i].length()) {
+
+            cout << "Producto encontrado: "
+                 << productos[i] << endl;
+
+            cout << "Registro numero: " << i + 1 << endl;
+
+            cout << "Posicion dentro del nombre: "
+                 << posicion << endl;
+
+            encontrado = true;
+        }
+    }
+
+    if (encontrado == false) {
+        cout << "Producto no encontrado." << endl;
+    }
+}
+
+
+
